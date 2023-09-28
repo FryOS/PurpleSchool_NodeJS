@@ -3,24 +3,26 @@ const { minus } = require("./minus.js");
 const { mult } = require("./multiply.js");
 const { plus } = require("./plus.js");
 
-const nodePath = process.argv[0];
-const appPath = process.argv[1];
-const val1 = process.argv[2];
-const val2 = process.argv[3];
-const exp = process.argv[4];
+const EventEmitter = require("events");
+const myEmitter = new EventEmitter();
 
-console.log("nodePath: " + nodePath);
-console.log("appPath: " + appPath);
-console.log();
+myEmitter.on("plus", (val1, val2) =>{
+    console.log(plus(val1, val2));
+});
+myEmitter.emit("plus", 25, 5);
 
-if (exp === "div") {
-  console.log(division(val1, val2));
-} else if (exp === "min") {
-  console.log(minus(val1, val2));
-} else if (exp === "plus") {
-  console.log(plus(val1, val2));
-} else if (exp === "mult") {
-  console.log(mult(val1, val2));
-} else {
-  console.log("Exit");
-}
+myEmitter.on("minus", (val1, val2) =>{
+    console.log(minus(val1, val2));
+});
+myEmitter.emit("minus", 25, 5);
+
+myEmitter.on("mult", (val1, val2) =>{
+    console.log(mult(val1, val2));
+});
+myEmitter.emit("mult", 25, 5);
+
+myEmitter.on("div", (val1, val2) =>{
+    console.log(division(val1, val2));
+});
+myEmitter.emit("div", 25, 5);
+
