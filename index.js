@@ -3,24 +3,28 @@ const { minus } = require("./minus.js");
 const { mult } = require("./multiply.js");
 const { plus } = require("./plus.js");
 
-const nodePath = process.argv[0];
-const appPath = process.argv[1];
-const val1 = process.argv[2];
-const val2 = process.argv[3];
-const exp = process.argv[4];
+const [, , val1, val2] = process.argv;
 
-console.log("nodePath: " + nodePath);
-console.log("appPath: " + appPath);
-console.log();
+const expressions = {
+  division,
+  minus,
+  mult,
+  plus,
+};
 
-if (exp === "div") {
-  console.log(division(val1, val2));
-} else if (exp === "min") {
-  console.log(minus(val1, val2));
-} else if (exp === "plus") {
-  console.log(plus(val1, val2));
-} else if (exp === "mult") {
-  console.log(mult(val1, val2));
-} else {
-  console.log("Exit");
+function strToNumber(str) {
+  if (str === undefined) {
+    return;
+  }
+  str = parseInt(str);
+  return str;
 }
+
+Object.keys(expressions).forEach(function (key) {
+  console.log(
+    `${key}, входные значения ${val1} и ${val2} - результат ${expressions[key](
+      strToNumber(val1),
+      strToNumber(val2)
+    )}`
+  );
+});
