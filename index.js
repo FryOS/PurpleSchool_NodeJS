@@ -6,23 +6,30 @@ const { plus } = require("./plus.js");
 const EventEmitter = require("events");
 const myEmitter = new EventEmitter();
 
-myEmitter.on("plus", (val1, val2) =>{
-    console.log(plus(val1, val2));
-});
-myEmitter.emit("plus", 25, 5);
+const expressions = {
+  division,
+  minus,
+  mult,
+  plus,
+};
+const [, , val1, val2] = process.argv;
 
-myEmitter.on("minus", (val1, val2) =>{
-    console.log(minus(val1, val2));
-});
-myEmitter.emit("minus", 25, 5);
+function strToNumber(str) {
+  if (str === undefined) {
+    return;
+  }
+  str = parseInt(str);
+  return str;
+}
 
-myEmitter.on("mult", (val1, val2) =>{
-    console.log(mult(val1, val2));
+Object.keys(expressions).forEach(function (key) {
+  myEmitter.on(key, (val1, val2) =>{
+    console.log(
+      `${key}, входные значения ${val1} и ${val2} - результат ${expressions[key](
+        strToNumber(val1),
+        strToNumber(val2)
+      )}`)
 });
-myEmitter.emit("mult", 25, 5);
-
-myEmitter.on("div", (val1, val2) =>{
-    console.log(division(val1, val2));
+myEmitter.emit(key, val1, val2);
 });
-myEmitter.emit("div", 25, 5);
 
