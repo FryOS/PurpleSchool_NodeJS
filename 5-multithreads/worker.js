@@ -1,14 +1,13 @@
 const { parentPort, workerData } = require("worker_threads");
 const filledArray = require("./filledArr.js");
 
-
-// const chunk = (array, size) => {
-//   const chunks = [];
-//   while (array.length) {
-//     chunks.push(array.splice(0, size));
-//   }
-//   return chunks;
-// };
+const chunk = (array, size) => {
+  const chunks = [];
+  while (array.length) {
+    chunks.push(array.splice(0, size));
+  }
+  return chunks;
+};
 
 process.env.UV_THREADPOOL_SIZE = 8;
 
@@ -21,9 +20,9 @@ function main(bigNumber) {
 //     array.push(i);
 //   }
 
-  const newArr = chunk(array, process.env.UV_THREADPOOL_SIZE);
+  const newArr = chunk(filledArray(bigNumber), process.env.UV_THREADPOOL_SIZE);
 
-  filledArray(bigNumber)
+  
 
 //   for (let j = 0; j < newArr.length; j++) {
 //     const element = newArr[j];
@@ -33,7 +32,6 @@ function main(bigNumber) {
 //       }
 //     }
 //   }
-  console.log(count);
   performance.mark("end");
   performance.measure("main", "start", "end");
   console.log(performance.getEntriesByName("main"));

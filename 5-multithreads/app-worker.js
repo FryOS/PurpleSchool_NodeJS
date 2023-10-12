@@ -1,5 +1,5 @@
 const { Worker } = require("worker_threads");
-const { main } = require("./main");
+const { main } = require("./main.js");
 
 const compute = (num) => {
   return new Promise((resolve, reject) => {
@@ -21,6 +21,7 @@ const compute = (num) => {
     });
   });
 };
-exports.compute = compute;
+
 
 main(3000000);
+exports.compute = compute;

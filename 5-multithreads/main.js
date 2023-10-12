@@ -1,4 +1,4 @@
-const { compute } = require("./app-worker");
+const { compute } = require("./app-worker.js");
 
 // const chunk = (array, size) => {
 //   const chunks = [];
@@ -7,17 +7,15 @@ const { compute } = require("./app-worker");
 //   }
 //   return chunks;
 // };
-const main = async (bigNumber) => {
+module.exports = async function main(bigNumber) {
   try {
     performance.mark("start");
     await Promise.all([compute(bigNumber)]);
   } catch (error) {
     console.error(error.message);
   }
-  console.log(result);
-
+  
   performance.mark("end");
   performance.measure("main", "start", "end");
   console.log(performance.getEntriesByName("main"));
 };
-exports.main = main;
