@@ -1,5 +1,4 @@
 const { Worker } = require("worker_threads");
-const { main } = require("./main.js");
 
 const compute = (num) => {
   return new Promise((resolve, reject) => {
@@ -22,6 +21,17 @@ const compute = (num) => {
   });
 };
 
+async function main(bigNumber) {
+  try {
+    performance.mark("start");
+    await Promise.all([compute(bigNumber)]);
+  } catch (error) {
+    console.error(error.message);
+  }
+  
+  performance.mark("end");
+  performance.measure("main", "start", "end");
+  console.log(performance.getEntriesByName("main"));
+};
 
 main(3000000);
-exports.compute = compute;
