@@ -1,0 +1,14 @@
+{
+  "name": "purpleschool_nodejs",
+  "version": "1.0.0",
+  "description": "NodeJS study",
+  "main": "weather.js",
+  "bin": {
+    "weather": "weather.js"
+  },
+  "scripts": {
+    "start": "node weather.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
