@@ -6,9 +6,19 @@
   "bin": {
     "weather": "weather.js"
   },
+  "type": "module",
   "scripts": {
-    "start": "node weather.js"
+    "start": "node weather.js",
+    "start_windows": "set TOKEN=556cd899ac127cbf6ffee35f118292f&&node weather.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.5.1",
+    "chalk": "^5.3.0",
+    "dedent-js": "^1.0.1"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
+  }
 }
