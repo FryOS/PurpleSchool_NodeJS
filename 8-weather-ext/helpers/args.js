@@ -3,6 +3,7 @@ const getArgs = (args) => {
   const res = {};
   const [executor, file, ...restartArgs] = args;
   restartArgs.forEach((value, index, array) => {
+    console.log(array);
     if (value.charAt(0) === "-") {
       if (index == array.length - 1) {
         res[value.substring(1)] = true;
