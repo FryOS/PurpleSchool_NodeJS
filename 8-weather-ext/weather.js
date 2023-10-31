@@ -57,6 +57,9 @@ function initCLI() {
   if (args.t) {
     return saveToken(args.t);
   }
+  if (args.l) {
+    return saveToken(args.l);
+  }
   return getForcast();
 }
 

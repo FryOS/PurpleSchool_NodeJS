@@ -8,7 +8,15 @@ const getArgs = (args) => {
       if (index == array.length - 1) {
         res[value.substring(1)] = true;
       } else if (array[index + 1].charAt(0) !== "-") {
-        res[value.substring(1)] = array[index + 1];
+        const arrValue = [];
+        for (let j = index + 1; j < array.length; j++) {
+          if(array[index + 1].charAt(0) === "-"){
+            break;
+          }
+          arrValue.push(array[j]);          
+        }
+        res[value.substring(1)] = arrValue;
+        //res[value.substring(1)] = array[index + 1];
       } else {
         res[value.substring(1)] = true;
       }
