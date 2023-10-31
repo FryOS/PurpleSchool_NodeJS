@@ -17,6 +17,19 @@ const saveToken = async (token) => {
   }
 };
 
+const saveLang = async (lang) => {
+  if (!lang.length) {
+    printError("Не передан язык");
+    return;
+  }
+  try {
+    await saveKeyValue(TOKEN_DICTIONARY.lang, lang);
+    printSuccess("Язык сохранен");
+  } catch (error) {
+    printError(error.message);
+  }
+};
+
 const saveCity = async (city) => {
   if (!city.length) {
     printError("Не передан город");
@@ -58,7 +71,7 @@ function initCLI() {
     return saveToken(args.t);
   }
   if (args.l) {
-    return saveToken(args.l);
+    return saveLang(args.l);
   }
   return getForcast();
 }
