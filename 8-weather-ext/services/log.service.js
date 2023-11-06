@@ -20,7 +20,16 @@ const printHelp = () => {
   );
 };
 
-const printWeather = (res, icon) => {
+const printWeather = (res, icon, lang = "ru") => {
+  if(lang !== "ru") {
+    console.log(
+      dedent`${chalk.bgYellow("Weather")} Weather in city ${res.name}
+      ${icon}  ${res.weather[0].description}
+      Temperature: ${res.main.temp} (feels like ${res.main.feels_like})
+      Speed's wind : ${res.wind.speed}
+      `
+    );
+  }
   console.log(
     dedent`${chalk.bgYellow("Weather")} Погода в городе ${res.name}
     ${icon}  ${res.weather[0].description}

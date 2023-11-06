@@ -1,7 +1,16 @@
 #!/usr/bin/env node
 import { getArgs } from "./helpers/args.js";
-import { printSuccess, printError, printHelp, printWeather } from "./services/log.service.js";
-import { saveKeyValue, TOKEN_DICTIONARY, getKeyValue } from "./services/storage.service.js";
+import {
+  printSuccess,
+  printError,
+  printHelp,
+  printWeather,
+} from "./services/log.service.js";
+import {
+  saveKeyValue,
+  TOKEN_DICTIONARY,
+  getKeyValue,
+} from "./services/storage.service.js";
 import { getWeather, getIcon } from "./services/api.service.js";
 
 const saveToken = async (token) => {
@@ -45,14 +54,17 @@ const saveCity = async (city) => {
 
 const getForcast = async () => {
   try {
-    const city = process.env.CITY ?? await getKeyValue(TOKEN_DICTIONARY.city);
-    const weather = await getWeather(city);
-    printWeather(weather, getIcon(weather.weather[0].icon));
+    const citys =
+      process.env.CITY ?? (await getKeyValue(TOKEN_DICTIONARY.city));
+    for (const city of citys) {
+      const weather = await getWeather(city);
+      printWeather(weather, getIcon(weather.weather[0].icon), TOKEN_DICTIONARY.lang);
+    }
   } catch (error) {
     if (error?.response?.status === 404) {
       printError("Неверно задан город");
     } else if (error?.response?.status === 401) {
-      printError("Неверно задан токен")
+      printError("Неверно задан токен");
     } else {
       console.log(error.message);
     }
