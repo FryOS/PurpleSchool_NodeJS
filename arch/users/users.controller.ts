@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { LoggerService } from "../logger/logger.service.js";
-import { BaseController } from "./base.controller.js";
+import { LoggerService } from "../src/logger/logger.service.js";
+import { BaseController } from "../src/common/base.controller.js";
 
 export class UserController extends BaseController {
   constructor(logger: LoggerService) {
@@ -20,9 +20,9 @@ export class UserController extends BaseController {
   }
 
   login(req: Request, res: Response, next: NextFunction) {
-    this.ok(res, "login")
+    this.ok(res, "login");
   }
   register(req: Request, res: Response, next: NextFunction) {
-    this.ok(res, "register")
+    this.ok(res, "register");
   }
 }

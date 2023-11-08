@@ -15,14 +15,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.App = void 0;
 const express_1 = __importDefault(require("express"));
 class App {
-    constructor(logger, userController) {
+    constructor(logger, userController, exeptionFilter) {
         this.app = (0, express_1.default)();
         this.port = 8000;
         this.logger = logger;
         this.userController = userController;
+        this.exeptionFilter = exeptionFilter;
     }
     useRoutes() {
         this.app.use("./users", this.userController.router);
+    }
+    useExeptionFilters() {
+        this.app.use(this.exeptionFilter.catch.bind(this.exeptionFilter));
     }
     init() {
         return __awaiter(this, void 0, void 0, function* () {
