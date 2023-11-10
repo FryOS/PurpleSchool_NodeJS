@@ -16,8 +16,7 @@ function strToNumber(str) {
   if (str === undefined) {
     return;
   }
-  str = parseInt(str);
-  return str;
+  return parseInt(str);
 }
 
 Object.keys(expressions).forEach(function (key) {
