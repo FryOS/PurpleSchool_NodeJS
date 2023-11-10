@@ -1,4 +1,7 @@
 const { Worker } = require("worker_threads");
+const sliceArr = require("./slicearr");
+
+const threads = process.env.UV_THREADPOOL_SIZE = 8;
 
 const compute = (num) => {
   return new Promise((resolve, reject) => {
@@ -21,10 +24,13 @@ const compute = (num) => {
   });
 };
 
-async function main(bigNumber) {
+async function main(array) {
+  
+  const arrOfarrays = sliceArr(array, threads);
+
   try {
     performance.mark("start");
-    await Promise.all([compute(bigNumber)]);
+    await arrOfarrays.map(x => Promise.all([compute(x)]));     
   } catch (error) {
     console.error(error.message);
   }
@@ -34,4 +40,12 @@ async function main(bigNumber) {
   console.log(performance.getEntriesByName("main"));
 };
 
-main(3000000);
+const arrayArrays = [];
+for (let i = 0; i <= 3_000_000; i++) { 
+  
+  if(arrayArrays[i] % 3 === 0) {
+    arrayArrays.push(i);
+  }    
+}
+
+main(arrayArrays);
