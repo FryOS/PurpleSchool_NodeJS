@@ -4,16 +4,21 @@ import { userRouter } from "../users/users.js";
 import { Server } from "http";
 import { LoggerService } from "./logger/logger.service.js";
 import { ExeptionFilter } from "./errors/exeption.filter";
+import { Ilogger } from "./logger/logger.interface";
 
 export class App {
   app: Express;
   server: Server | undefined;
   port: number;
-  logger: LoggerService;
+  logger: Ilogger;
   userController: UserController;
   exeptionFilter: ExeptionFilter;
 
-  constructor(logger: LoggerService, userController: UserController, exeptionFilter: ExeptionFilter) {
+  constructor(
+    logger: Ilogger,
+    userController: UserController,
+    exeptionFilter: ExeptionFilter
+  ) {
     this.app = express();
     this.port = 8000;
     this.logger = logger;
@@ -25,8 +30,8 @@ export class App {
     this.app.use("./users", this.userController.router);
   }
 
-  useExeptionFilters(){
-    this.app.use(this.exeptionFilter.catch.bind(this.exeptionFilter))
+  useExeptionFilters() {
+    this.app.use(this.exeptionFilter.catch.bind(this.exeptionFilter));
   }
 
   public async init() {
