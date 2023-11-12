@@ -1,8 +1,6 @@
 import { UserController } from "./users/users.controller";
 import express, { Express } from "express";
-import { userRouter } from "./users/users.js";
 import { Server } from "http";
-import { LoggerService } from "./logger/logger.service.js";
 import { ExeptionFilter } from "./errors/exeption.filter";
 import { Ilogger } from "./logger/logger.interface";
 import { inject, injectable } from "inversify";
