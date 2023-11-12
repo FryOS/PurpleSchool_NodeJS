@@ -38,49 +38,38 @@ var __setFunctionName = (this && this.__setFunctionName) || function (f, name, p
     return Object.defineProperty(f, "name", { configurable: true, value: prefix ? "".concat(prefix, " ", name) : name });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserController = void 0;
-const base_controller_js_1 = require("../common/base.controller.js");
+exports.ExeptionFilter = void 0;
+const http_error_class_1 = require("./http-error.class");
 const inversify_1 = require("inversify");
 require("reflect-metadata");
-let UserController = (() => {
+let ExeptionFilter = (() => {
     let _classDecorators = [(0, inversify_1.injectable)()];
     let _classDescriptor;
     let _classExtraInitializers = [];
     let _classThis;
-    let _classSuper = base_controller_js_1.BaseController;
-    var UserController = _classThis = class extends _classSuper {
-        constructor(loggerService) {
-            super(loggerService);
-            this.loggerService = loggerService;
-            this.bindRoutes([
-                {
-                    path: "/register",
-                    method: "post",
-                    func: this.register,
-                },
-                {
-                    path: "/login",
-                    method: "post",
-                    func: this.login,
-                },
-            ]);
+    var ExeptionFilter = _classThis = class {
+        constructor(logger) {
+            this.logger = logger;
         }
-        login(req, res, next) {
-            this.ok(res, "login");
-        }
-        register(req, res, next) {
-            this.ok(res, "register");
+        catch(err, req, res, next) {
+            if (err instanceof http_error_class_1.HTTPError) {
+                this.logger.error(`[${err.context}] Ошибка ${err.statusCode} : ${err.message}`);
+                res.status(err.statusCode).send({ err: err.message });
+            }
+            else {
+                this.logger.error(`${err.message}`);
+                res.status(500).send({ err: err.message });
+            }
         }
     };
-    __setFunctionName(_classThis, "UserController");
+    __setFunctionName(_classThis, "ExeptionFilter");
     (() => {
-        var _a;
-        const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create((_a = _classSuper[Symbol.metadata]) !== null && _a !== void 0 ? _a : null) : void 0;
+        const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create(null) : void 0;
         __esDecorate(null, _classDescriptor = { value: _classThis }, _classDecorators, { kind: "class", name: _classThis.name, metadata: _metadata }, null, _classExtraInitializers);
-        UserController = _classThis = _classDescriptor.value;
+        ExeptionFilter = _classThis = _classDescriptor.value;
         if (_metadata) Object.defineProperty(_classThis, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
         __runInitializers(_classThis, _classExtraInitializers);
     })();
-    return UserController = _classThis;
+    return ExeptionFilter = _classThis;
 })();
-exports.UserController = UserController;
+exports.ExeptionFilter = ExeptionFilter;

@@ -38,49 +38,49 @@ var __setFunctionName = (this && this.__setFunctionName) || function (f, name, p
     return Object.defineProperty(f, "name", { configurable: true, value: prefix ? "".concat(prefix, " ", name) : name });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserController = void 0;
-const base_controller_js_1 = require("../common/base.controller.js");
+exports.BaseController = void 0;
+const express_1 = require("express");
 const inversify_1 = require("inversify");
 require("reflect-metadata");
-let UserController = (() => {
+let BaseController = (() => {
     let _classDecorators = [(0, inversify_1.injectable)()];
     let _classDescriptor;
     let _classExtraInitializers = [];
     let _classThis;
-    let _classSuper = base_controller_js_1.BaseController;
-    var UserController = _classThis = class extends _classSuper {
-        constructor(loggerService) {
-            super(loggerService);
-            this.loggerService = loggerService;
-            this.bindRoutes([
-                {
-                    path: "/register",
-                    method: "post",
-                    func: this.register,
-                },
-                {
-                    path: "/login",
-                    method: "post",
-                    func: this.login,
-                },
-            ]);
+    var BaseController = _classThis = class {
+        constructor(logger) {
+            this.logger = logger;
+            this._router = (0, express_1.Router)();
         }
-        login(req, res, next) {
-            this.ok(res, "login");
+        get router() {
+            return this._router;
         }
-        register(req, res, next) {
-            this.ok(res, "register");
+        send(res, code, message) {
+            res.type("application/json");
+            return res.status(code).json(message);
+        }
+        ok(res, message) {
+            return this.send(res, 200, message);
+        }
+        created(res) {
+            return res.status(201);
+        }
+        bindRoutes(routes) {
+            for (const route of routes) {
+                this.logger.log(`[${route.method}] ${route.path}`);
+                const handler = route.func.bind(this);
+                this.router[route.method](route.path, handler);
+            }
         }
     };
-    __setFunctionName(_classThis, "UserController");
+    __setFunctionName(_classThis, "BaseController");
     (() => {
-        var _a;
-        const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create((_a = _classSuper[Symbol.metadata]) !== null && _a !== void 0 ? _a : null) : void 0;
+        const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create(null) : void 0;
         __esDecorate(null, _classDescriptor = { value: _classThis }, _classDecorators, { kind: "class", name: _classThis.name, metadata: _metadata }, null, _classExtraInitializers);
-        UserController = _classThis = _classDescriptor.value;
+        BaseController = _classThis = _classDescriptor.value;
         if (_metadata) Object.defineProperty(_classThis, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
         __runInitializers(_classThis, _classExtraInitializers);
     })();
-    return UserController = _classThis;
+    return BaseController = _classThis;
 })();
-exports.UserController = UserController;
+exports.BaseController = BaseController;

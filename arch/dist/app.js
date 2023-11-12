@@ -33,54 +33,62 @@ var __runInitializers = (this && this.__runInitializers) || function (thisArg, i
     }
     return useValue ? value : void 0;
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __setFunctionName = (this && this.__setFunctionName) || function (f, name, prefix) {
     if (typeof name === "symbol") name = name.description ? "[".concat(name.description, "]") : "";
     return Object.defineProperty(f, "name", { configurable: true, value: prefix ? "".concat(prefix, " ", name) : name });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserController = void 0;
-const base_controller_js_1 = require("../common/base.controller.js");
+exports.App = void 0;
+const express_1 = __importDefault(require("express"));
 const inversify_1 = require("inversify");
 require("reflect-metadata");
-let UserController = (() => {
+let App = (() => {
     let _classDecorators = [(0, inversify_1.injectable)()];
     let _classDescriptor;
     let _classExtraInitializers = [];
     let _classThis;
-    let _classSuper = base_controller_js_1.BaseController;
-    var UserController = _classThis = class extends _classSuper {
-        constructor(loggerService) {
-            super(loggerService);
-            this.loggerService = loggerService;
-            this.bindRoutes([
-                {
-                    path: "/register",
-                    method: "post",
-                    func: this.register,
-                },
-                {
-                    path: "/login",
-                    method: "post",
-                    func: this.login,
-                },
-            ]);
+    var App = _classThis = class {
+        constructor(logger, userController, exeptionFilter) {
+            this.logger = logger;
+            this.userController = userController;
+            this.exeptionFilter = exeptionFilter;
+            this.app = (0, express_1.default)();
+            this.port = 8000;
         }
-        login(req, res, next) {
-            this.ok(res, "login");
+        useRoutes() {
+            this.app.use("./users", this.userController.router);
         }
-        register(req, res, next) {
-            this.ok(res, "register");
+        useExeptionFilters() {
+            this.app.use(this.exeptionFilter.catch.bind(this.exeptionFilter));
+        }
+        init() {
+            return __awaiter(this, void 0, void 0, function* () {
+                this.useRoutes();
+                this.server = this.app.listen(this.port);
+                this.logger.log(`Сервер запущен на https://localhost:${this.port}`);
+            });
         }
     };
-    __setFunctionName(_classThis, "UserController");
+    __setFunctionName(_classThis, "App");
     (() => {
-        var _a;
-        const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create((_a = _classSuper[Symbol.metadata]) !== null && _a !== void 0 ? _a : null) : void 0;
+        const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create(null) : void 0;
         __esDecorate(null, _classDescriptor = { value: _classThis }, _classDecorators, { kind: "class", name: _classThis.name, metadata: _metadata }, null, _classExtraInitializers);
-        UserController = _classThis = _classDescriptor.value;
+        App = _classThis = _classDescriptor.value;
         if (_metadata) Object.defineProperty(_classThis, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
         __runInitializers(_classThis, _classExtraInitializers);
     })();
-    return UserController = _classThis;
+    return App = _classThis;
 })();
-exports.UserController = UserController;
+exports.App = App;

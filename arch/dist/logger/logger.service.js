@@ -38,49 +38,42 @@ var __setFunctionName = (this && this.__setFunctionName) || function (f, name, p
     return Object.defineProperty(f, "name", { configurable: true, value: prefix ? "".concat(prefix, " ", name) : name });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserController = void 0;
-const base_controller_js_1 = require("../common/base.controller.js");
+exports.LoggerService = void 0;
+const tslog_1 = require("tslog");
 const inversify_1 = require("inversify");
 require("reflect-metadata");
-let UserController = (() => {
+let LoggerService = (() => {
     let _classDecorators = [(0, inversify_1.injectable)()];
     let _classDescriptor;
     let _classExtraInitializers = [];
     let _classThis;
-    let _classSuper = base_controller_js_1.BaseController;
-    var UserController = _classThis = class extends _classSuper {
-        constructor(loggerService) {
-            super(loggerService);
-            this.loggerService = loggerService;
-            this.bindRoutes([
-                {
-                    path: "/register",
-                    method: "post",
-                    func: this.register,
-                },
-                {
-                    path: "/login",
-                    method: "post",
-                    func: this.login,
-                },
-            ]);
+    var LoggerService = _classThis = class {
+        constructor() {
+            this.logger = new tslog_1.Logger({
+                displayInstanceName: false,
+                displayLoggerName: false,
+                displayFilePath: "hidden",
+                displayFunctionName: false
+            });
         }
-        login(req, res, next) {
-            this.ok(res, "login");
+        log(...args) {
+            this.logger.info(...args);
         }
-        register(req, res, next) {
-            this.ok(res, "register");
+        error(...args) {
+            this.logger.error(...args);
+        }
+        warn(...args) {
+            this.logger.warn(...args);
         }
     };
-    __setFunctionName(_classThis, "UserController");
+    __setFunctionName(_classThis, "LoggerService");
     (() => {
-        var _a;
-        const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create((_a = _classSuper[Symbol.metadata]) !== null && _a !== void 0 ? _a : null) : void 0;
+        const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create(null) : void 0;
         __esDecorate(null, _classDescriptor = { value: _classThis }, _classDecorators, { kind: "class", name: _classThis.name, metadata: _metadata }, null, _classExtraInitializers);
-        UserController = _classThis = _classDescriptor.value;
+        LoggerService = _classThis = _classDescriptor.value;
         if (_metadata) Object.defineProperty(_classThis, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
         __runInitializers(_classThis, _classExtraInitializers);
     })();
-    return UserController = _classThis;
+    return LoggerService = _classThis;
 })();
-exports.UserController = UserController;
+exports.LoggerService = LoggerService;
