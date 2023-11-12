@@ -9,6 +9,8 @@
   "type": "commonjs",
   "scripts": {
     "start": "node ./dist/src/main.js",
+    "lint": "eslint ./src/**",
+    "lint:fix": "eslint ./src/** --fix",
     "build": "tsc",
     "start_windows": "set TOKEN=556cd899ac127cbf6ffee35f118292f&&node weather.js"
   },
