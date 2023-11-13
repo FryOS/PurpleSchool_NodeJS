@@ -1,5 +1,5 @@
 import { App } from './app';
-import { UserController } from './users/users.controller';
+import { UserController } from './users/UserController';
 import { LoggerService } from './logger/logger.service';
 import { ExeptionFilter } from './errors/exeption.filter';
 import { Container, ContainerModule, interfaces } from 'inversify';
