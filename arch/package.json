@@ -8,9 +8,11 @@
   },
   "type": "commonjs",
   "scripts": {
-    "start": "node ./dist/src/main.js",
+    "start": "node ./dist/main.js",
+    "dev": "nodemon",
     "lint": "eslint ./src/**",
     "lint:fix": "eslint ./src/** --fix",
+    "lint:fix_dist": "eslint ./dist/** --fix",
     "build": "tsc",
     "start_windows": "set TOKEN=556cd899ac127cbf6ffee35f118292f&&node weather.js"
   },
@@ -22,17 +24,20 @@
     "dedent-js": "^1.0.1",
     "express": "^4.18.2",
     "inversify": "^6.0.1",
-    "tslog": "^3.3.3"
+    "tslog": "^3.3.3",
+    "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
     "@types/express": "^4.17.20",
-    "cross-env": "^7.0.3",
     "@typescript-eslint/eslint-plugin": "^6.10.0",
     "@typescript-eslint/parser": "^6.10.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8.53.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
+    "nodemon": "^3.0.1",
     "prettier": "^3.0.3",
+    "ts-node": "^10.9.1",
     "typescript": "^5.2.2"
   }
 }
