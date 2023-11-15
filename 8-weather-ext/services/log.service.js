@@ -9,7 +9,17 @@ const printSuccess = (message) => {
   console.log(chalk.bgGreen("Message") + ": " + message);
 };
 
-const printHelp = () => {
+const printHelp = (lang = "ru") => {
+  if (lang !== "ru") {
+    console.log(
+      dedent`${chalk.bgCyan("Help")}
+      without parameters - weather output
+      -s [CITY] to set the city
+      -h for help output
+      -t [API_KEY] to save the token
+          `
+    );
+  }
   console.log(
     dedent`${chalk.bgCyan("Help")}
         без параметров - вывод погоды
@@ -21,7 +31,7 @@ const printHelp = () => {
 };
 
 const printWeather = (res, icon, lang = "ru") => {
-  if(lang !== "ru") {
+  if (lang !== "ru") {
     console.log(
       dedent`${chalk.bgYellow("Weather")} Weather in city ${res.name}
       ${icon}  ${res.weather[0].description}

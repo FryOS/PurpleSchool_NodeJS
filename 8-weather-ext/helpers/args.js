@@ -16,7 +16,6 @@ const getArgs = (args) => {
           arrValue.push(array[j]);          
         }
         res[value.substring(1)] = arrValue;
-        //res[value.substring(1)] = array[index + 1];
       } else {
         res[value.substring(1)] = true;
       }

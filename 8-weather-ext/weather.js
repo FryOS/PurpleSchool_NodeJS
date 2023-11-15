@@ -74,7 +74,7 @@ const getForcast = async () => {
 function initCLI() {
   const args = getArgs(process.argv);
   if (args.h) {
-    return printHelp();
+    return printHelp(args.l);
   }
   if (args.s) {
     return saveCity(args.s);
